@@ -1,4 +1,4 @@
-import 'package:certify/shared/components/text_field_certify.dart';
+import 'package:certify/shared/components/text_field/text_field_certify.dart';
 import 'package:certify/shared/theme/app_colors.dart';
 import 'package:certify/shared/theme/app_fonts.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +43,7 @@ class ForgotPasswordPage extends StatelessWidget {
                   "Usuário",
                   "Informe seu email",
                   _controllerUsername,
+                  TextInputType.emailAddress,
                   secondaryColor: true,
                 ),
                 const SizedBox(height: 24),

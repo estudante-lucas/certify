@@ -1,6 +1,6 @@
 import 'package:certify/app/components/recent_card.dart';
-import 'package:certify/shared/models/worker/worker_model.dart';
-import 'package:certify/shared/services/worker/worker_service.dart';
+import 'package:certify/shared/models/collaborator/collaborator_model.dart';
+import 'package:certify/shared/services/recents_storage/recents_storage_service.dart';
 import 'package:flutter/material.dart';
 
 class RecentCards extends StatefulWidget {
@@ -10,8 +10,13 @@ class RecentCards extends StatefulWidget {
   State<RecentCards> createState() => _RecentCardsState();
 }
 
-class _RecentCardsState extends State<RecentCards> {
-  Future<List<Worker>> recents = WorkerService.findAllWorkers();
+class _RecentCardsState extends State<RecentCards> with RouteAware {
+  Future<List<Collaborator>?> recents = RecentsStorageService.get();
+
+  @override
+  void didPop() {
+    recents = RecentsStorageService.get();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +25,9 @@ class _RecentCardsState extends State<RecentCards> {
         future: recents,
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-            List<Worker> workers = snapshot.data!;
+            List<Collaborator> collaborators = snapshot.data!;
             return Column(
-              children: workers
+              children: collaborators
                   .map<RecentCard>(
                     (user) => RecentCard(user: user),
                   )
@@ -30,7 +35,7 @@ class _RecentCardsState extends State<RecentCards> {
             );
           } else {
             return const Column(
-              children: [Text("Nenhum resultado encontrado!")],
+              children: [Text("Nenhuma pesquisa recente!")],
             );
           }
         },

@@ -1,5 +1,5 @@
 import 'package:certify/app/components/certificate_card.dart';
-import 'package:certify/shared/models/worker/worker_model.dart';
+import 'package:certify/shared/models/collaborator/collaborator_model.dart';
 import 'package:certify/shared/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +8,7 @@ class WorkerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var user = ModalRoute.of(context)!.settings.arguments as Worker;
+    var user = ModalRoute.of(context)!.settings.arguments as Collaborator;
 
     return Scaffold(
       appBar: AppBar(
@@ -29,15 +29,19 @@ class WorkerPage extends StatelessWidget {
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               const SizedBox(height: 8),
-              const Text("Treinamentos Ativos"),
+              const Text("Treinamentos"),
               const SizedBox(height: 16),
-              CertificateCard("Técnico em irrigação", DateTime.utc(2023, DateTime.october, 25)),
-              CertificateCard("Técnico em irrigação", DateTime.utc(2023, DateTime.december, 25)),
-              CertificateCard("Técnico em irrigação", DateTime.utc(2023, DateTime.september, 25)),
+              Column(
+                children: (user.collaboratorTrainings != null && user.collaboratorTrainings!.isNotEmpty)
+                    ? user.collaboratorTrainings!
+                        .map((collaboratorTraining) => CertificateCard(collaboratorTraining.training.name, collaboratorTraining.deadline))
+                        .toList()
+                    : [const Text("Nenhum treinamento cadastrado!")],
+              )
             ],
           ),
         ),

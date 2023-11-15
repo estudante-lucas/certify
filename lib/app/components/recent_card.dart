@@ -1,4 +1,4 @@
-import 'package:certify/shared/models/worker/worker_model.dart';
+import 'package:certify/shared/models/collaborator/collaborator_model.dart';
 import 'package:certify/shared/routes/app_routes.dart';
 import 'package:certify/shared/theme/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +9,7 @@ class RecentCard extends StatelessWidget {
     required this.user,
   });
 
-  final Worker user;
+  final Collaborator user;
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +45,10 @@ class RecentCard extends StatelessWidget {
               children: [
                 const Icon(Icons.circle, size: 45, color: AppColors.backgroundSecondary),
                 user.image != null
-                    ? Text("IM")
+                    ? const Text("IM")
                     : Text(
                         user.getInitials(),
-                        style: TextStyle(color: AppColors.fontSecondary),
+                        style: const TextStyle(color: AppColors.fontSecondary),
                       )
               ],
             ),
